@@ -2,45 +2,26 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-import time
-import base64
 import os
-import requests
-import lxml.html as lh
-import pandas as pd
 #predefine constants
 
 categories = ["travel", "food", "adventure"]
 
 browser = webdriver.Chrome()
-browser.get("https://intra2.lipi.go.id/masuk.cgi?depan")
+browser.get("http://google.com")
 
 
-select = Select(browser.find_element_by_xpath('/html/body/center/table/tbody/tr/td/table/tbody/tr[4]/td/table/tbody/tr/td/font/center/table[1]/tbody/tr[1]/td[1]/font/b/select'))
-select.select_by_value('1036008011')
-nama = browser.find_element_by_xpath("/html/body/center/table/tbody/tr/td/table/tbody/tr[4]/td/table/tbody/tr/td/font/center/table[1]/tbody/tr[1]/td[1]/font/b/input[1]")
-
-nama.send_keys("wagi004")
-kata = browser.find_element_by_xpath("/html/body/center/table/tbody/tr/td/table/tbody/tr[4]/td/table/tbody/tr/td/font/center/table[1]/tbody/tr[1]/td[1]/font/b/input[2]")
-kata.send_keys("wagiyah7")
-loginBtn = browser.find_element_by_xpath("/html/body/center/table/tbody/tr/td/table/tbody/tr[4]/td/table/tbody/tr/td/font/center/table[1]/tbody/tr[1]/td[1]/font/b/input[3]")
-loginBtn.click()
-
-
-Issn = browser.find_element_by_xpath("/html/body/center/table/tbody/tr/td/table/tbody/tr[4]/td/table/tbody/tr/td/table/tbody/tr[3]/td/table/tbody/tr/td[4]/table/tbody/tr/td[3]/font/a[4]")
-Issn.click()
-trs = browser.find_elements_by_xpath("/html/body/center/table/tbody/tr/td/table/tbody/tr[4]/td/table/tbody/tr/td/font/p[3]/table/tbody/tr")
 with open ('a.csv', 'w') as f:
-f.write("No, TERBITAN DAN PENGELOLA	, ID, REGISTRASI, BERKAS, VERIFIKASI, PEMBAYARAN, SK ISSN, NO.ISSN ")
+	f.write("No, TERBITAN DAN PENGELOLA	, ID, REGISTRASI, BERKAS, VERIFIKASI, PEMBAYARAN, SK ISSN, NO.ISSN ")
 
-for tr in trs:
-	 tds = tr.find_elements_by_xpath(".//td/font")
-	 for td in tds:
-	 	key = td.get_attribute("innerHTML")
-	 	if key == '&nbsp; √ &nbsp;':
-	 		key = "checked"
-	 	f.write(key)
-	 	f.write(",")
+	for tr in trs:
+		 tds = tr.find_elements_by_xpath(".//td/font")
+		 for td in tds:
+		 	key = td.get_attribute("innerHTML")
+		 	if key == '&nbsp; √ &nbsp;':
+		 		key = "checked"
+		 	f.write(key)
+		 	f.write(",")
 
 
 f.close()
